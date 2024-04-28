@@ -14,11 +14,9 @@ class MyApp extends StatelessWidget {
       title: 'Expenses App',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
-
-        // colorScheme: Colors.white,
-        // useMaterial3: true,
+        fontFamily: 'Quicksand',
       ),
-      home: MyHomeView(),
+      home: const MyHomeView(),
     );
   }
 }

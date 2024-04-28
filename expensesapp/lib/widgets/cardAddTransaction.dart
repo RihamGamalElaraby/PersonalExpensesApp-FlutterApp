@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddTransation extends StatefulWidget {
-  AddTransation({super.key, required this.onpressed});
+  const AddTransation({super.key, required this.onpressed});
   final Function onpressed;
 
   @override
@@ -27,23 +27,23 @@ class _AddTransationState extends State<AddTransation> {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(hintText: 'Title'),
+              decoration: const InputDecoration(hintText: 'Title'),
             ),
             TextField(
               onSubmitted: (_) => addTransaction,
               keyboardType: TextInputType.number,
               controller: amountController,
-              decoration: InputDecoration(hintText: 'Amount'),
+              decoration: const InputDecoration(hintText: 'Amount'),
             ),
             TextButton(
               onPressed: addTransaction,
-              child: Text('Add Transaction'),
+              child: const Text('Add Transaction'),
             )
           ],
         ),

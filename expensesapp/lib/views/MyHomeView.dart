@@ -1,11 +1,12 @@
 import 'package:expensesapp/models/transaction.dart';
 // import 'package:expensesapp/widgets/add_transaction.dart';
 import 'package:expensesapp/widgets/cardAddTransaction.dart';
+import 'package:expensesapp/widgets/chart.dart';
 import 'package:expensesapp/widgets/transactionList.dart';
 import 'package:flutter/material.dart';
 
 class MyHomeView extends StatefulWidget {
-  const MyHomeView({Key? key}) : super(key: key);
+  const MyHomeView({super.key});
 
   @override
   _MyHomeViewState createState() => _MyHomeViewState();
@@ -13,18 +14,18 @@ class MyHomeView extends StatefulWidget {
 
 class _MyHomeViewState extends State<MyHomeView> {
   final List<Transaction> transactions = [
-    Transaction(
-      id: '1',
-      amount: 60,
-      date: DateTime.now(),
-      title: 'new shirt',
-    ),
-    Transaction(
-      id: '2',
-      amount: 80.00,
-      date: DateTime.now(),
-      title: 'new shirt',
-    ),
+    // Transaction(
+    //   id: '1',
+    //   amount: 60,
+    //   date: DateTime.now(),
+    //   title: 'new shirt',
+    // ),
+    // Transaction(
+    //   id: '2',
+    //   amount: 80.00,
+    //   date: DateTime.now(),
+    //   title: 'new shirt',
+    // ),
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -38,6 +39,12 @@ class _MyHomeViewState extends State<MyHomeView> {
     setState(() {
       transactions.add(newTx);
     });
+  }
+
+  List<Transaction> get recentTransaction {
+    return transactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList(); // Convert Iterable to List
   }
 
   void _startAddNewTransaction(BuildContext context) {
@@ -61,11 +68,14 @@ class _MyHomeViewState extends State<MyHomeView> {
       appBar: AppBar(
         // foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('My Expenses'),
+        title: const Text(
+          'My Expenses',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             onPressed: () => _startAddNewTransaction(context),
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -73,38 +83,14 @@ class _MyHomeViewState extends State<MyHomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                // color: Colors.blue,
-                elevation: 5,
-                child: Text('CHART!'),
-              ),
-            ),
+            Chart(recentTransation: recentTransaction),
             TransactionList(transactions),
-            // Column(
-            //   children: transactions
-            //       .map((tx) => Card(
-            //             child: ListTile(
-            //               leading: CircleAvatar(
-            //                 child: FittedBox(
-            //                   child: Text('\$${tx.amount}'),
-            //                 ),
-            //               ),
-            //               title: Text(tx.title),
-            //               subtitle: Text(
-            //                 '${tx.date.day}/${tx.date.month}/${tx.date.year}',
-            //               ),
-            //             ),
-            //           ))
-            //       .toList(),
-            // ),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => _startAddNewTransaction(context),
       ),
     );
