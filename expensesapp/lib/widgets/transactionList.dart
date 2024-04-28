@@ -4,24 +4,23 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-
-  TransactionList(this.transactions);
-
+  final Function deletxTx;
+  const TransactionList(this.transactions, this.deletxTx);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
+    return SizedBox(
+      height: 450,
       child: transactions.isEmpty
           ? Column(
               children: [
-                Text(
+                const Text(
                   'No transactions added yet!',
                   style: TextStyle(color: Colors.black, fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
+                SizedBox(
                   height: 200,
                   child: Image.asset(
                     'assets/images/waiting.png',
@@ -34,34 +33,49 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 5,
-                  margin: EdgeInsets.symmetric(vertical: 9, horizontal: 5),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 9, horizontal: 5),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 50,
+                    leading: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle),
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: FittedBox(
                           child: Text(
-                              '\$${transactions[index].amount.toStringAsFixed(2)}'),
+                            '\$${transactions[index].amount.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12),
+                          ),
                         ),
                       ),
                     ),
                     title: Text(
                       transactions[index].title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: const Color.fromARGB(255, 35, 35, 35),
+                        color: Color.fromARGB(255, 35, 35, 35),
                       ),
                     ),
                     subtitle: Text(
                       DateFormat('yyyy-MM-dd')
                           .format(transactions[index].date), // Corrected line
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: Colors.grey,
                       ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () {
+                        deletxTx(transactions[index].id);
+                      },
                     ),
                   ),
                 );

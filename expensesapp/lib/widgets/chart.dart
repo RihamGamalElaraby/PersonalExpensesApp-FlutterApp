@@ -40,22 +40,29 @@ class Chart extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValue.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                label: data['day'] as String, // Cast 'day' to String
-                spendingAmount:
-                    data['amount'] as double, // Cast 'amount' to double
-                spendingPctoftotal: totalSpending == 0.0
-                    ? 0.0
-                    : (data['amount'] as double) / totalSpending,
+        child: recentTransation.isEmpty
+            ? Center(
+                child: Text(
+                  'No transactions added yet',
+                  style: TextStyle(fontSize: 16),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: groupedTransactionValue.map((data) {
+                  return Flexible(
+                    fit: FlexFit.tight,
+                    child: ChartBar(
+                      label: data['day'] as String,
+                      spendingAmount: data['amount'] as double,
+                      spendingPctoftotal: totalSpending == 0.0
+                          ? 0.0
+                          : (data['amount'] as double) / totalSpending,
+                      barColor: Theme.of(context).primaryColor,
+                    ),
+                  );
+                }).toList(),
               ),
-            );
-          }).toList(),
-        ),
       ),
     );
   }

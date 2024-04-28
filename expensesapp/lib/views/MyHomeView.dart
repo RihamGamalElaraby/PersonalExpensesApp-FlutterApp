@@ -13,31 +13,26 @@ class MyHomeView extends StatefulWidget {
 }
 
 class _MyHomeViewState extends State<MyHomeView> {
-  final List<Transaction> transactions = [
-    // Transaction(
-    //   id: '1',
-    //   amount: 60,
-    //   date: DateTime.now(),
-    //   title: 'new shirt',
-    // ),
-    // Transaction(
-    //   id: '2',
-    //   amount: 80.00,
-    //   date: DateTime.now(),
-    //   title: 'new shirt',
-    // ),
-  ];
+  final List<Transaction> transactions = [];
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       amount: amount,
-      date: DateTime.now(),
+      date: chosenDate,
       title: title,
     );
 
     setState(() {
       transactions.add(newTx);
+    });
+  }
+
+  void deletTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((tx) {
+        return tx.id == id;
+      });
     });
   }
 
@@ -84,7 +79,10 @@ class _MyHomeViewState extends State<MyHomeView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(recentTransation: recentTransaction),
-            TransactionList(transactions),
+            TransactionList(
+              transactions,
+              deletTransaction,
+            ),
           ],
         ),
       ),

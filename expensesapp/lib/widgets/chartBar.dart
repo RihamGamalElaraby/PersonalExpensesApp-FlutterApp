@@ -6,6 +6,7 @@ class ChartBar extends StatelessWidget {
     required this.label,
     required this.spendingAmount,
     required this.spendingPctoftotal,
+    required Color barColor,
   });
   final String label;
   final double spendingAmount;
@@ -13,7 +14,7 @@ class ChartBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Container(
+      SizedBox(
           height: 20,
           child:
               FittedBox(child: Text('\$${spendingAmount.toStringAsFixed(0)}'))),
