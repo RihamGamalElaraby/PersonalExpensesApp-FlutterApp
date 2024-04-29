@@ -46,84 +46,90 @@ class _AddTransationState extends State<AddTransation> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3, // Add elevation for a shadow effect
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15), // Rounded corners
-        side: BorderSide(color: Colors.grey[300]!), // Add border
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(
-                hintText: 'Title',
-                border: OutlineInputBorder(), // Add border to text field
-                contentPadding: EdgeInsets.all(10),
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 3, // Add elevation for a shadow effect
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+          side: BorderSide(color: Colors.grey[300]!), // Add border
+        ),
+        child: Container(
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                controller: titleController,
+                decoration: InputDecoration(
+                  hintText: 'Title',
+                  border: OutlineInputBorder(), // Add border to text field
+                  contentPadding: EdgeInsets.all(10),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              onSubmitted: (_) => addTransaction,
-              keyboardType: TextInputType.number,
-              controller: amountController,
-              decoration: InputDecoration(
-                hintText: 'Amount',
-                border: OutlineInputBorder(), // Add border
-                contentPadding: EdgeInsets.all(10),
+              SizedBox(height: 10),
+              TextField(
+                onSubmitted: (_) => addTransaction,
+                keyboardType: TextInputType.number,
+                controller: amountController,
+                decoration: InputDecoration(
+                  hintText: 'Amount',
+                  border: OutlineInputBorder(), // Add border
+                  contentPadding: EdgeInsets.all(10),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    selectedData == null
-                        ? 'No Date Chosen'
-                        : DateFormat.yMd().format(selectedData!),
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      selectedData == null
+                          ? 'No Date Chosen'
+                          : DateFormat.yMd().format(selectedData!),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: presentDatePicker,
-                  child: Text(
-                    'Choose Date',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                  TextButton(
+                    onPressed: presentDatePicker,
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: addTransaction,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).primaryColor, // Use theme color
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                  ),
                 ),
-              ],
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: addTransaction,
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Theme.of(context).primaryColor, // Use theme color
-                padding: EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10), // Rounded corners
+                child: Text(
+                  'Add Transaction',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Text color
+                  ),
                 ),
               ),
-              child: Text(
-                'Add Transaction',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // Text color
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
